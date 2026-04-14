@@ -585,3 +585,45 @@ body.dark-theme [style*="background: white"] {
 body.dark-theme .card i {
     color: #a0b4ff;
 }
+
+/* -------------------- ДОРАБОТКА ТЁМНОЙ ТЕМЫ ДЛЯ БЛОКОВ "ПРОБЛЕМА/РЕШЕНИЕ" -------------------- */
+/* Блок актуальности – фон и текст */
+body.dark-theme [style*="background: white"] {
+    background: #2d2d44 !important;
+    color: #e0e0e0 !important;
+}
+/* Карточка "Проблема" (красный фон) */
+body.dark-theme [style*="background: #fee2e2"] {
+    background: #4a1a1a !important;   /* Тёмно-красный */
+    color: #ffb3b3 !important;
+}
+body.dark-theme [style*="background: #fee2e2"] ul,
+body.dark-theme [style*="background: #fee2e2"] li,
+body.dark-theme [style*="background: #fee2e2"] h4 {
+    color: #ffd6d6 !important;
+}
+/* Карточка "Решение" (зелёный фон) */
+body.dark-theme [style*="background: #d1e7dd"] {
+    background: #1a3a2a !important;   /* Тёмно-зелёный */
+    color: #b3ffcc !important;
+}
+body.dark-theme [style*="background: #d1e7dd"] ul,
+body.dark-theme [style*="background: #d1e7dd"] li,
+body.dark-theme [style*="background: #d1e7dd"] h4 {
+    color: #ccffdd !important;
+}
+/* Блок статистики (синий фон) */
+body.dark-theme [style*="background: #eef2ff"] {
+    background: #1e2a4a !important;
+    color: #cce4ff !important;
+}
+body.dark-theme [style*="background: #eef2ff"] strong {
+    color: #ffd966 !important;
+}
+/* Карточки статистики на главной (они и так работают через общие правила .card в тёмной теме, но добавим для надёжности) */
+body.dark-theme .card h3 {
+    color: #ffffff !important;
+}
+body.dark-theme .card p {
+    color: #c0c0e0 !important;
+}
