@@ -1,0 +1,587 @@
+/* -------------------- 1. ПОДКЛЮЧЕНИЕ ШРИФТА -------------------- */
+/* Импортируем шрифт Inter с серверов Google. Параметры: 400 (обычный), 500, 600, 700 (жирный). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* -------------------- 2. CSS-ПЕРЕМЕННЫЕ (глобальные значения) -------------------- */
+:root {
+    --primary: #4361ee;           /* Основной синий цвет – для кнопок, ссылок, акцентов */
+    --primary-dark: #3a56d4;      /* Более тёмный оттенок синего для состояния наведения */
+    --secondary: #6c757d;         /* Серый цвет для второстепенного текста (описания) */
+    --dark: #212529;              /* Почти чёрный цвет для основного текста (светлая тема) */
+    --light: #f8f9fa;             /* Светло-серый фон (используется редко, но оставлен) */
+    --white: #ffffff;             /* Белый цвет для карточек и фоновых блоков */
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02); /* Лёгкая тень */
+    --shadow-hover: 0 25px 35px -12px rgba(0, 0, 0, 0.2); /* Усиленная тень при наведении на карточку */
+    --border-radius: 20px;        /* Единое скругление углов для карточек и блоков */
+}
+
+/* -------------------- 3. ГЛОБАЛЬНЫЙ СБРОС ОТСТУПОВ -------------------- */
+/* Убираем внешние и внутренние отступы у всех элементов, меняем модель расчёта ширины */
+* {
+    margin: 0;                    /* Обнуляем внешние отступы */
+    padding: 0;                  /* Обнуляем внутренние отступы */
+    box-sizing: border-box;      /* Ширина элемента включает padding и border, не увеличивая его */
+}
+
+/* -------------------- 4. БАЗОВЫЕ СТИЛИ BODY (ФОН, ШРИФТ, ЦВЕТ) -------------------- */
+body {
+    font-family: 'Inter', sans-serif;   /* Устанавливаем шрифт Inter, запасной – sans-serif */
+    /* Радиальный градиент: центр в точке (10% от ширины, 20% от высоты) */
+    background: radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, rgba(255, 255, 255, 0.98) 90%);
+    color: var(--dark);                 /* Цвет текста – почти чёрный */
+    line-height: 1.6;                  /* Межстрочный интервал для удобства чтения */
+    transition: background 0.3s, color 0.3s; /* Плавная смена фона и цвета при переключении темы */
+    position: relative;                /* Для позиционирования псевдоэлемента с точками */
+}
+/* Псевдоэлемент перед body – создаёт декоративный паттерн (точки) на фоне */
+body::before {
+    content: '';                       /* Обязательное свойство для псевдоэлемента */
+    position: fixed;                  /* Фиксированное позиционирование (не двигается при скролле) */
+    top: 0;                           /* Прижимаем к верхнему краю */
+    left: 0;                          /* Прижимаем к левому краю */
+    width: 100%;                      /* На всю ширину экрана */
+    height: 100%;                     /* На всю высоту экрана */
+    /* Рисуем радиальными градиентами точки: цвет с прозрачностью 3%, размер 2%, прозрачные промежутки */
+    background-image: radial-gradient(circle at 20% 40%, rgba(67, 97, 238, 0.03) 2%, transparent 2.5%);
+    background-size: 40px 40px;       /* Размер одной «клетки» узора */
+    pointer-events: none;             /* Чтобы точки не мешали кликам по элементам */
+    z-index: 0;                       /* Помещаем под основной контент */
+}
+
+/* -------------------- 5. ШАПКА САЙТА -------------------- */
+header {
+    background: var(--dark);          /* Тёмный фон шапки */
+    color: var(--white);              /* Белый текст */
+    padding: 1rem 0;                  /* Вертикальные отступы 1rem, горизонтальные 0 */
+    box-shadow: var(--shadow);        /* Лёгкая тень снизу */
+    position: relative;               /* Для корректного перекрытия z-index */
+    z-index: 10;                      /* Чтобы шапка была выше декоративных точек */
+}
+/* Заголовок первого уровня внутри шапки */
+header h1 {
+    text-align: center;               /* Выравнивание по центру */
+    font-weight: 700;                 /* Жирное начертание */
+    letter-spacing: -0.5px;           /* Немного уменьшаем расстояние между буквами */
+    font-size: 1.8rem;                /* Размер шрифта */
+}
+/* Иконка внутри заголовка */
+header h1 i {
+    margin-right: 10px;               /* Отступ справа от иконки */
+    color: var(--primary);            /* Цвет иконки – основной синий */
+}
+
+/* -------------------- 6. НАВИГАЦИЯ -------------------- */
+nav {
+    display: flex;                    /* Горизонтальное расположение пунктов */
+    justify-content: center;          /* Центрируем по горизонтали */
+    flex-wrap: wrap;                  /* Если не влезают – переносим на новую строку */
+    gap: 0.5rem;                     /* Расстояние между пунктами */
+    margin-top: 0.75rem;              /* Отступ сверху от заголовка */
+}
+/* Ссылки в навигации */
+nav a {
+    color: #e0e0e0;                   /* Светло-серый цвет текста */
+    text-decoration: none;            /* Убираем подчёркивание */
+    padding: 0.5rem 1.2rem;           /* Внутренние отступы: сверху/снизу 0.5rem, слева/справа 1.2rem */
+    border-radius: 40px;              /* Сильно скруглённые углы (пилюли) */
+    font-weight: 500;                 /* Полужирное начертание */
+    transition: all 0.2s ease;        /* Плавные переходы для всех свойств */
+}
+/* Иконка внутри ссылки навигации */
+nav a i {
+    margin-right: 8px;                /* Отступ иконки от текста */
+}
+/* Эффект при наведении на пункт меню */
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон */
+    color: white;                         /* Полностью белый текст */
+}
+/* Активный пункт меню (текущая страница) */
+nav a.active {
+    background: var(--primary);       /* Заливка основным синим цветом */
+    color: white;                     /* Белый текст */
+}
+
+/* -------------------- 7. ОСНОВНОЙ КОНТЕЙНЕР ДЛЯ КОНТЕНТА -------------------- */
+.container {
+    max-width: 1200px;                /* Максимальная ширина контента */
+    margin: 2rem auto;                /* Отступы сверху/снизу 2rem, горизонтально auto (центрирование) */
+    padding: 0 1.5rem;                /* Боковые отступы на случай узкого экрана */
+    position: relative;               /* Чтобы контент был над декоративными точками */
+    z-index: 2;                       /* Поднимаем выше псевдоэлемента body::before */
+}
+
+/* -------------------- 8. ЗАГОЛОВКИ СТРАНИЦ С ДЕКОРАТИВНОЙ ПОЛОСКОЙ -------------------- */
+.page-title {
+    font-size: 2.2rem;                /* Крупный размер */
+    font-weight: 800;                 /* Экстра-жирный */
+    margin-bottom: 1.5rem;            /* Отступ снизу */
+    position: relative;               /* Для позиционирования псевдоэлемента с полоской */
+    display: inline-block;            /* Чтобы полоска была только под текстом, а не на всю ширину */
+}
+/* Псевдоэлемент – цветная полоска под заголовком */
+.page-title::after {
+    content: '';                      /* Обязательно для псевдоэлемента */
+    position: absolute;               /* Абсолютное позиционирование относительно .page-title */
+    bottom: -8px;                    /* Отступ вниз от текста */
+    left: 0;                          /* Привязана к левому краю */
+    width: 80px;                      /* Ширина полоски */
+    height: 5px;                      /* Высота полоски */
+    background: linear-gradient(90deg, var(--primary), #a855f7); /* Градиент от синего к фиолетовому */
+    border-radius: 5px;               /* Скругление концов */
+    animation: slideIn 0.5s ease-out; /* Анимация появления (выезжает слева) */
+}
+/* Анимация выезжающей полоски */
+@keyframes slideIn {
+    from { width: 0; opacity: 0; }   /* Начальное состояние: ширина 0, прозрачно */
+    to { width: 80px; opacity: 1; }   /* Конечное: ширина 80px, полностью видно */
+}
+
+/* -------------------- 9. СЕТКА КАРТОЧЕК (FLEX-КОНТЕЙНЕР) -------------------- */
+.card-container {
+    display: flex;                    /* Включаем flex-раскладку */
+    flex-wrap: wrap;                 /* Разрешаем перенос карточек на следующую строку */
+    gap: 1.8rem;                     /* Расстояние между карточками */
+    justify-content: center;         /* Центрируем карточки по горизонтали */
+    margin-top: 1.5rem;              /* Отступ сверху от фильтра */
+}
+
+/* -------------------- 10. СТИЛИ ОДНОЙ КАРТОЧКИ (СТЕКЛЯННЫЙ ЭФФЕКТ) -------------------- */
+.card {
+    background: rgba(255, 255, 255, 0.9);  /* Белый с прозрачностью 90% (лёгкое стекло) */
+    backdrop-filter: blur(2px);            /* Размытие фона под карточкой (эффект стекла) */
+    border-radius: var(--border-radius);   /* Скругление углов из переменной (20px) */
+    padding: 1.5rem;                      /* Внутренние отступы */
+    box-shadow: var(--shadow);             /* Лёгкая тень из переменной */
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.2s; /* Плавные изменения */
+    width: 300px;                         /* Фиксированная ширина карточки */
+    display: flex;                        /* Внутри – flex-контейнер */
+    flex-direction: column;               /* Элементы располагаются вертикально */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Полупрозрачная белая рамка */
+    position: relative;                   /* Для позиционирования цветной полоски сверху */
+    overflow: hidden;                     /* Чтобы цветная полоска не вылезала за скруглённые углы */
+    animation: fadeInUp 0.4s ease-out;    /* Анимация появления снизу */
+}
+/* Цветная полоска сверху карточки (псевдоэлемент) */
+.card::before {
+    content: '';                          /* Обязательное свойство */
+    position: absolute;                   /* Абсолютное позиционирование внутри .card */
+    top: 0;                               /* Прижимаем к верхнему краю */
+    left: 0;                              /* Прижимаем к левому краю */
+    width: 100%;                          /* На всю ширину карточки */
+    height: 5px;                          /* Высота полоски 5 пикселей */
+    background: linear-gradient(90deg, var(--primary), #a855f7, var(--primary-dark)); /* Градиент */
+    opacity: 0.8;                         /* Немного прозрачная */
+}
+/* Эффект при наведении курсора на карточку */
+.card:hover {
+    transform: translateY(-8px);          /* Поднимаем карточку вверх на 8px */
+    box-shadow: var(--shadow-hover);      /* Усиленная тень */
+    background: rgba(255, 255, 255, 1);   /* Полностью непрозрачный белый фон */
+}
+/* Заголовок внутри карточки */
+.card h3 {
+    font-size: 1.4rem;                    /* Размер шрифта */
+    font-weight: 700;                     /* Жирный */
+    margin-bottom: 0.5rem;                /* Отступ снизу */
+}
+/* Текст описания внутри карточки */
+.card p {
+    color: var(--secondary);              /* Серый цвет */
+    margin-bottom: 1rem;                  /* Отступ снизу */
+    font-size: 0.95rem;                  /* Размер шрифта */
+    flex-grow: 1;                         /* Занимает всё свободное место, чтобы кнопка была внизу */
+}
+/* Блок с зарплатой */
+.card .salary {
+    font-weight: 700;                     /* Жирный */
+    color: var(--primary);                /* Синий цвет */
+    margin-bottom: 0.5rem;                /* Отступ снизу */
+    font-size: 1.1rem;                   /* Немного крупнее */
+}
+/* Бейдж востребованности */
+.card .demand {
+    display: inline-block;                /* Чтобы ширина была по содержимому */
+    padding: 0.25rem 1rem;               /* Внутренние отступы */
+    border-radius: 30px;                 /* Сильно скруглённые углы (пилюля) */
+    font-size: 0.75rem;                  /* Мелкий текст */
+    font-weight: 700;                    /* Жирный */
+    text-transform: uppercase;            /* Все буквы заглавные */
+    align-self: flex-start;              /* Прижимаем к левому краю (не растягиваем) */
+    margin-bottom: 1rem;                 /* Отступ снизу */
+}
+/* Иконки внутри карточки – анимация при наведении */
+.card i {
+    transition: transform 0.2s, color 0.2s; /* Плавное изменение размера и цвета */
+}
+.card:hover i {
+    transform: scale(1.1);                /* Увеличиваем иконку на 10% */
+    color: var(--primary);                /* Меняем цвет на основной синий */
+}
+
+/* -------------------- 11. ЦВЕТА БЕЙДЖЕЙ ВОСТРЕБОВАННОСТИ -------------------- */
+.demand-high { background: #fee2e2; color: #b91c1c; }   /* Красный для высокого спроса */
+.demand-medium { background: #fff3cd; color: #856404; } /* Жёлтый для среднего */
+.demand-low { background: #d1e7dd; color: #0f5132; }    /* Зелёный для низкого */
+
+/* -------------------- 12. КНОПКИ (ОБЩИЙ СТИЛЬ) -------------------- */
+.card button, .btn {
+    background: linear-gradient(105deg, var(--primary) 0%, #8b5cf6 100%); /* Градиент синий→фиолетовый */
+    color: white;                         /* Белый текст */
+    border: none;                         /* Убираем стандартную рамку */
+    padding: 0.6rem 1.2rem;               /* Внутренние отступы */
+    border-radius: 40px;                  /* Сильно скруглённые углы (пилюля) */
+    font-size: 0.9rem;                   /* Размер шрифта */
+    font-weight: 600;                     /* Полужирный */
+    cursor: pointer;                      /* Курсор-указатель при наведении */
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); /* Плавная анимация с нелинейным ускорением */
+    box-shadow: 0 8px 20px -6px var(--primary); /* Тень с синим свечением */
+    align-self: flex-start;              /* Прижимаем к левому краю (не растягиваем) */
+    text-decoration: none;                /* Убираем подчёркивание (для ссылок) */
+    display: inline-flex;                /* Гибкий контейнер для иконки и текста в строку */
+    align-items: center;                 /* Вертикальное выравнивание по центру */
+    gap: 8px;                            /* Расстояние между иконкой и текстом */
+}
+/* Эффект при наведении на кнопку */
+.card button:hover, .btn:hover {
+    transform: translateY(-2px);          /* Лёгкий подъём вверх */
+    box-shadow: 0 12px 25px -8px var(--primary); /* Усиленная тень */
+    background: linear-gradient(105deg, #3b4fcf 0%, #7c3aed 100%); /* Более тёмный градиент */
+}
+/* Эффект при нажатии (active) */
+.card button:active, .btn:active {
+    transform: translateY(1px);           /* Небольшое опускание (имитация нажатия) */
+}
+
+/* -------------------- 13. БЛОК ФИЛЬТРАЦИИ (СТЕКЛЯННЫЙ ЭФФЕКТ) -------------------- */
+.filter-section {
+    background: rgba(255, 255, 255, 0.85); /* Белый с прозрачностью 85% */
+    backdrop-filter: blur(4px);            /* Размытие фона под блоком (стекло) */
+    padding: 1rem 1.5rem;                 /* Внутренние отступы */
+    border-radius: 60px;                  /* Очень скруглённые углы (большая пилюля) */
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+    display: flex;                        /* Горизонтальное расположение элементов */
+    gap: 1rem;                            /* Расстояние между элементами */
+    flex-wrap: wrap;                      /* Перенос на новую строку при узком экране */
+    align-items: center;                  /* Вертикальное выравнивание по центру */
+    margin-bottom: 2rem;                  /* Отступ снизу */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Полупрозрачная белая рамка */
+}
+/* Метка (label) внутри блока фильтрации */
+.filter-section label {
+    font-weight: 600;                     /* Полужирный */
+}
+/* Селекты и поля ввода внутри фильтра */
+.filter-section select, .filter-section input {
+    padding: 0.5rem 1rem;                 /* Внутренние отступы */
+    border: 1px solid #dee2e6;            /* Светло-серая рамка */
+    border-radius: 40px;                  /* Скругление */
+    font-size: 0.9rem;                   /* Размер шрифта */
+    background: white;                    /* Белый фон */
+    transition: all 0.2s;                /* Плавные переходы */
+}
+/* Состояние фокуса для полей ввода */
+.filter-section select:focus, .filter-section input:focus {
+    outline: none;                        /* Убираем стандартное обведение */
+    border-color: var(--primary);         /* Меняем цвет рамки на основной синий */
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); /* Синее свечение */
+}
+
+/* -------------------- 14. КАЛЬКУЛЯТОР ЗАРПЛАТ -------------------- */
+.calculator-box {
+    background: white;                    /* Белый фон */
+    border-radius: var(--border-radius);  /* Скругление углов */
+    padding: 2rem;                        /* Внутренние отступы */
+    max-width: 550px;                     /* Ограничение ширины */
+    margin: 0 auto;                       /* Центрирование по горизонтали */
+    box-shadow: var(--shadow);             /* Тень */
+}
+/* Группа полей формы (метка + поле) */
+.form-group {
+    margin-bottom: 1.5rem;                /* Отступ снизу */
+}
+/* Метка внутри группы */
+.form-group label {
+    display: block;                       /* Занимает всю ширину */
+    font-weight: 600;                     /* Полужирный */
+    margin-bottom: 0.5rem;                /* Отступ снизу */
+}
+/* Селекты и поля ввода внутри калькулятора */
+.form-group select, .form-group input {
+    width: 100%;                          /* На всю ширину родителя */
+    padding: 0.75rem 1rem;                /* Внутренние отступы */
+    border: 1px solid #dee2e6;            /* Светло-серая рамка */
+    border-radius: 40px;                  /* Скругление */
+    font-size: 1rem;                     /* Размер шрифта */
+}
+/* Блок с результатом расчёта */
+.result-box {
+    margin-top: 1.5rem;                   /* Отступ сверху */
+    padding: 1rem;                        /* Внутренние отступы */
+    background: #eef2ff;                  /* Светло-синий фон */
+    border-radius: var(--border-radius);  /* Скругление */
+    border-left: 5px solid var(--primary); /* Цветная полоска слева */
+}
+
+/* -------------------- 15. ПОДВАЛ САЙТА -------------------- */
+footer {
+    background: var(--dark);              /* Тёмный фон */
+    color: #aaa;                          /* Светло-серый текст */
+    text-align: center;                   /* Текст по центру */
+    padding: 1.5rem;                      /* Внутренние отступы */
+    margin-top: 3rem;                     /* Отступ сверху от контента */
+    font-size: 0.85rem;                  /* Мелкий шрифт */
+}
+/* Иконки в подвале */
+footer i {
+    margin-right: 5px;                    /* Отступ справа */
+    color: var(--primary);                /* Синий цвет */
+}
+
+/* -------------------- 16. АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК (FADE IN + СДВИГ) -------------------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;                       /* Начальное состояние – полностью прозрачно */
+        transform: translateY(20px);      /* Сдвиг вниз на 20 пикселей */
+    }
+    to {
+        opacity: 1;                       /* Конечное состояние – полностью видимо */
+        transform: translateY(0);         /* Без сдвига */
+    }
+}
+
+/* -------------------- 17. АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ (ШИРИНА ≤ 768px) -------------------- */
+@media (max-width: 768px) {
+    header h1 { font-size: 1.4rem; }            /* Уменьшаем заголовок шапки */
+    nav a { padding: 0.4rem 0.8rem; font-size: 0.8rem; } /* Уменьшаем ссылки в меню */
+    .page-title { font-size: 1.8rem; }           /* Уменьшаем заголовки страниц */
+    .filter-section {
+        flex-direction: column;                  /* Элементы фильтра выстраиваются вертикально */
+        align-items: stretch;                    /* Растягиваются на всю ширину */
+        border-radius: 24px;                     /* Меньшее скругление */
+    }
+    .filter-section select, .filter-section input {
+        width: 100%;                             /* Поля ввода на всю ширину */
+    }
+    .card-container {
+        justify-content: center;                 /* Карточки по центру */
+    }
+}
+
+/* -------------------- 18. СТИЛИ ДЛЯ КВИЗА (ТЕСТА) -------------------- */
+.quiz-container {
+    background: white;                    /* Белый фон */
+    border-radius: var(--border-radius);  /* Скругление */
+    padding: 2rem;                        /* Внутренние отступы */
+    box-shadow: var(--shadow);             /* Тень */
+    max-width: 700px;                     /* Ограничение ширины */
+    margin: 0 auto;                       /* Центрирование */
+}
+/* Прогресс-бар (полоса выполнения) */
+.progress {
+    height: 8px;                          /* Высота */
+    background: #e0e0e0;                  /* Светло-серый фон */
+    border-radius: 10px;                  /* Скругление */
+    margin-bottom: 2rem;                  /* Отступ снизу */
+    overflow: hidden;                     /* Чтобы дочерний элемент не вылезал */
+}
+/* Заполненная часть прогресс-бара */
+.progress-bar {
+    width: 0%;                            /* Начальная ширина 0% */
+    height: 100%;                         /* На всю высоту родителя */
+    background: var(--primary);           /* Синий цвет */
+    transition: width 0.3s;              /* Плавное изменение ширины */
+}
+/* Контейнер для вариантов ответов */
+.options {
+    display: flex;
+    flex-direction: column;               /* Вертикальное расположение */
+    gap: 1rem;                            /* Расстояние между вариантами */
+    margin: 1.5rem 0;                     /* Отступы сверху и снизу */
+}
+/* Кнопка варианта ответа */
+.option-btn {
+    background: #f2f2f2;                  /* Светло-серый фон */
+    border: 2px solid transparent;        /* Прозрачная рамка (запас для выделения) */
+    border-radius: 60px;                  /* Сильно скруглённые углы */
+    padding: 0.8rem 1.2rem;               /* Внутренние отступы */
+    font-size: 1rem;                      /* Размер шрифта */
+    cursor: pointer;                      /* Курсор-указатель */
+    transition: all 0.2s;                /* Плавные переходы */
+    text-align: left;                     /* Текст слева */
+    display: flex;                        /* Для иконки и текста в строку */
+    align-items: center;                  /* Вертикальное выравнивание */
+    gap: 12px;                            /* Расстояние между иконкой и текстом */
+}
+/* Иконка внутри варианта ответа */
+.option-btn i {
+    width: 24px;                          /* Фиксированная ширина для выравнивания */
+    color: var(--primary);                /* Синий цвет */
+}
+/* Эффект при наведении на вариант */
+.option-btn:hover {
+    background: #e6e6e6;                  /* Темнее фон */
+    border-color: var(--primary);         /* Рамка становится синей */
+}
+/* Выбранный (активный) вариант */
+.option-btn.selected {
+    background: var(--primary);           /* Синий фон */
+    color: white;                         /* Белый текст */
+}
+.option-btn.selected i {
+    color: white;                         /* Белая иконка */
+}
+/* Кнопки навигации (Назад / Далее) */
+.navigation {
+    display: flex;
+    justify-content: space-between;       /* Растягиваем по краям */
+    gap: 1rem;                            /* Расстояние между кнопками */
+    margin-top: 1rem;                     /* Отступ сверху */
+}
+/* Блок с результатом теста */
+.result-card {
+    display: flex;
+    gap: 1.5rem;                          /* Расстояние между элементами */
+    align-items: center;                  /* Выравнивание по центру */
+    flex-wrap: wrap;                      /* Перенос на узких экранах */
+    background: #f8f9fa;                  /* Светлый фон */
+    padding: 1.5rem;                      /* Внутренние отступы */
+    border-radius: 20px;                  /* Скругление */
+}
+/* Адаптация результата для телефонов (ширина ≤ 500px) */
+@media (max-width: 500px) {
+    .result-card {
+        flex-direction: column;           /* Вертикальное расположение */
+        text-align: center;               /* Текст по центру */
+    }
+}
+
+/* -------------------- 19. ДОПОЛНИТЕЛЬНО: КЛИКАБЕЛЬНЫЕ КАРТОЧКИ-ССЫЛКИ -------------------- */
+/* Обёртка-ссылка вокруг карточки (чтобы вся карточка была кликабельной) */
+.card-link {
+    text-decoration: none;                /* Убираем подчёркивание */
+    display: block;                       /* Блочный элемент */
+}
+/* Эффект при наведении на ссылку-обёртку */
+.card-link .card {
+    transition: transform 0.2s, box-shadow 0.2s; /* Плавные переходы */
+}
+.card-link:hover .card {
+    transform: translateY(-6px);          /* Подъём карточки */
+    box-shadow: var(--shadow-hover);       /* Усиленная тень */
+}
+
+/* -------------------- 20. ТЁМНАЯ ТЕМА (АКТИВИРУЕТСЯ КЛАССОМ .DARK-THEME НА BODY) -------------------- */
+/* Основной фон body в тёмной теме – глубокий фиолетово-синий градиент */
+body.dark-theme {
+    background: radial-gradient(circle at 30% 10%, #0f0c29, #24243e);
+    color: #f0f0f0;                       /* Светлый цвет для основного текста */
+}
+/* Паттерн точек в тёмной теме – более светлые точки */
+body.dark-theme::before {
+    background-image: radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.05) 2%, transparent 2.5%);
+}
+/* Все карточки – тёмно-синие с полупрозрачностью */
+body.dark-theme .card {
+    background: rgba(30, 30, 50, 0.85);
+    backdrop-filter: blur(4px);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;                       /* Светлый текст внутри карточек */
+}
+/* Заголовки карточек */
+body.dark-theme .card h3 {
+    color: #ffffff;                       /* Белый цвет для заголовков */
+}
+/* Второстепенный текст внутри карточек */
+body.dark-theme .card p {
+    color: #c0c0e0;                       /* Светло-сиреневый для читаемости */
+}
+/* Блок зарплаты в карточках */
+body.dark-theme .card .salary {
+    color: #a0b4ff;                       /* Светло-синий для акцента */
+}
+/* Бейджи востребованности оставляем без изменений (их цвета и так контрастны) */
+/* Цветная полоска карточек в тёмной теме – неоновые оттенки */
+body.dark-theme .card::before {
+    background: linear-gradient(90deg, #60a5fa, #c084fc);
+}
+/* Блок фильтрации */
+body.dark-theme .filter-section {
+    background: rgba(30, 30, 50, 0.8);
+    color: #f0f0f0;                       /* Светлый текст */
+}
+/* Поля ввода фильтра */
+body.dark-theme .filter-section select,
+body.dark-theme .filter-section input {
+    background: #1e1e2f;
+    color: #e0e0e0;
+    border-color: #3a3a5a;
+}
+/* Калькулятор и контейнер квиза */
+body.dark-theme .calculator-box,
+body.dark-theme .quiz-container {
+    background: #2d2d44;
+    color: #e0e0e0;
+}
+/* Группы форм в калькуляторе */
+body.dark-theme .form-group label {
+    color: #f0f0f0;
+}
+/* Поля ввода в калькуляторе */
+body.dark-theme .form-group select,
+body.dark-theme .form-group input {
+    background: #1e1e2f;
+    color: #e0e0e0;
+    border-color: #3a3a5a;
+}
+/* Блок результата */
+body.dark-theme .result-box {
+    background: #1e1e2f;
+    color: #e0e0e0;
+    border-left-color: #60a5fa;
+}
+/* Кнопки вариантов ответа в квизе */
+body.dark-theme .option-btn {
+    background: #3a3a5a;
+    color: #e0e0e0;
+}
+body.dark-theme .option-btn:hover {
+    background: #4a4a6a;
+}
+/* Текст вопроса в квизе */
+body.dark-theme #question-text {
+    color: #ffffff;
+}
+/* Подвал */
+body.dark-theme footer {
+    background: #0f0f1a;
+    color: #b0b0d0;                       /* Светлый текст в подвале */
+}
+/* Ссылки в подвале */
+body.dark-theme footer a {
+    color: #a0b4ff;
+}
+/* Ссылки навигации */
+body.dark-theme nav a.active {
+    background: var(--primary);
+    color: white;
+}
+body.dark-theme nav a {
+    color: #c0c0e0;
+}
+body.dark-theme nav a:hover {
+    color: white;
+}
+/* Заголовки страниц */
+body.dark-theme .page-title {
+    color: #ffffff;
+}
+/* Приветственный блок на главной (если есть inline-стили) */
+body.dark-theme [style*="background: white"] {
+    background: #2d2d44 !important;
+    color: #e0e0e0 !important;
+}
+/* Иконки в карточках */
+body.dark-theme .card i {
+    color: #a0b4ff;
+}

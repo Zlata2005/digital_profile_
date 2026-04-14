@@ -1,0 +1,397 @@
+
+/* -------------------- 1. ПОДКЛЮЧЕНИЕ ШРИФТА -------------------- */
+/* Импортируем современный шрифт Inter от Google Fonts (внешний ресурс, но не библиотека) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* -------------------- 2. CSS-ПЕРЕМЕННЫЕ (цветовая схема) -------------------- */
+:root {
+    --primary: #4361ee;           /* Основной синий (кнопки, акценты) */
+    --primary-dark: #3a56d4;      /* Тёмный синий для наведения */
+    --secondary: #6c757d;         /* Серый для второстепенного текста */
+    --dark: #212529;              /* Почти чёрный для основного текста (светлая тема) */
+    --light: #f8f9fa;             /* Светлый фон (светлая тема) */
+    --white: #ffffff;             /* Белый для карточек */
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    --shadow-hover: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+    --border-radius: 20px;        /* Единое скругление для всех блоков */
+}
+
+/* -------------------- 3. ГЛОБАЛЬНЫЙ СБРОС -------------------- */
+* {
+    margin: 0;                    /* Убираем отступы у всех элементов */
+    padding: 0;                  /* Убираем внутренние отступы */
+    box-sizing: border-box;      /* Ширина включает padding и border */
+}
+
+/* -------------------- 4. БАЗОВЫЕ СТИЛИ BODY -------------------- */
+body {
+    font-family: 'Inter', sans-serif;       /* Используем Inter, если не загрузится — sans-serif */
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%); /* Мягкий градиент */
+    color: var(--dark);                     /* Цвет текста из переменной */
+    line-height: 1.6;                       /* Увеличенный межстрочный интервал для читаемости */
+    transition: background 0.3s, color 0.3s; /* Плавная смена при переключении темы */
+}
+
+/* -------------------- 5. ШАПКА САЙТА -------------------- */
+header {
+    background: var(--dark);      /* Тёмный фон шапки */
+    color: var(--white);          /* Белый текст */
+    padding: 1rem 0;              /* Вертикальный отступ 1rem, горизонтальный 0 */
+    box-shadow: var(--shadow);    /* Лёгкая тень снизу */
+}
+
+/* Заголовок в шапке */
+header h1 {
+    text-align: center;           /* По центру */
+    font-weight: 700;             /* Жирное начертание */
+    letter-spacing: -0.5px;       /* Небольшое сжатие межбуквенного интервала */
+    font-size: 1.8rem;            /* Размер шрифта */
+}
+/* Иконка внутри заголовка */
+header h1 i {
+    margin-right: 10px;           /* Отступ справа от иконки */
+    color: var(--primary);        /* Цвет иконки — основной синий */
+}
+
+/* -------------------- 6. НАВИГАЦИЯ -------------------- */
+nav {
+    display: flex;                /* Горизонтальное расположение */
+    justify-content: center;      /* Центрирование по горизонтали */
+    flex-wrap: wrap;              /* Перенос на новую строку, если не влезают */
+    gap: 0.5rem;                 /* Расстояние между пунктами */
+    margin-top: 0.75rem;          /* Отступ сверху от заголовка */
+}
+
+/* Стили ссылок в навигации */
+nav a {
+    color: #e0e0e0;               /* Светло-серый цвет */
+    text-decoration: none;        /* Убираем подчёркивание */
+    padding: 0.5rem 1.2rem;       /* Внутренние отступы */
+    border-radius: 40px;          /* Сильно скруглённые углы (пилюли) */
+    font-weight: 500;             /* Полужирное начертание */
+    transition: all 0.2s ease;    /* Плавный переход для всех свойств */
+}
+/* Иконка внутри ссылки */
+nav a i {
+    margin-right: 8px;            /* Отступ иконки от текста */
+}
+/* Эффект при наведении */
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон */
+    color: white;                        /* Белый текст */
+}
+/* Активный пункт меню (текущая страница) */
+nav a.active {
+    background: var(--primary);   /* Заливка основным цветом */
+    color: white;                 /* Белый текст */
+}
+
+/* -------------------- 7. ОСНОВНОЙ КОНТЕЙНЕР -------------------- */
+.container {
+    max-width: 1200px;            /* Максимальная ширина контента */
+    margin: 2rem auto;            /* Отступы сверху/снизу 2rem, горизонтально auto (центрирование) */
+    padding: 0 1.5rem;            /* Боковые отступы на случай узкого экрана */
+}
+
+/* -------------------- 8. ЗАГОЛОВКИ СТРАНИЦ С ДЕКОРАТИВНОЙ ПОЛОСКОЙ -------------------- */
+.page-title {
+    font-size: 2.2rem;            /* Крупный размер */
+    font-weight: 800;             /* Экстра-жирный */
+    margin-bottom: 1.5rem;        /* Отступ снизу */
+    position: relative;           /* Для позиционирования псевдоэлемента */
+    display: inline-block;        /* Чтобы полоска была под текстом, а не на всю ширину */
+}
+/* Декоративная полоска под заголовком (псевдоэлемент) */
+.page-title::after {
+    content: '';                  /* Обязательное свойство для псевдоэлемента */
+    position: absolute;           /* Абсолютное позиционирование относительно .page-title */
+    bottom: -8px;                /* На 8px ниже текста */
+    left: 0;                      /* Прижата к левому краю */
+    width: 60px;                  /* Ширина полоски */
+    height: 4px;                  /* Высота полоски */
+    background: var(--primary);   /* Цвет — основной синий */
+    border-radius: 4px;           /* Небольшое скругление */
+}
+
+/* -------------------- 9. СЕТКА КАРТОЧЕК (FLEX) -------------------- */
+.card-container {
+    display: flex;                /* Гибкий контейнер */
+    flex-wrap: wrap;             /* Перенос карточек */
+    gap: 1.8rem;                 /* Расстояние между карточками */
+    justify-content: center;     /* Центрирование по горизонтали */
+    margin-top: 1.5rem;          /* Отступ сверху */
+}
+
+/* -------------------- 10. КАРТОЧКА -------------------- */
+.card {
+    background: var(--white);     /* Белый фон (в светлой теме) */
+    border-radius: var(--border-radius); /* Скругление углов */
+    padding: 1.5rem;              /* Внутренние отступы */
+    box-shadow: var(--shadow);    /* Лёгкая тень */
+    transition: transform 0.25s ease, box-shadow 0.25s ease; /* Плавный подъём и тень */
+    width: 300px;                 /* Фиксированная ширина */
+    display: flex;                /* Flex для вертикального расположения содержимого */
+    flex-direction: column;       /* Колонка */
+    border: 1px solid rgba(0,0,0,0.03); /* Едва заметная рамка */
+    animation: fadeInUp 0.4s ease-out; /* Анимация появления */
+}
+/* Эффект при наведении на карточку */
+.card:hover {
+    transform: translateY(-6px);  /* Поднимаем вверх */
+    box-shadow: var(--shadow-hover); /* Усиленная тень */
+}
+/* Заголовок карточки */
+.card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+/* Текст описания */
+.card p {
+    color: var(--secondary);      /* Серый цвет для второстепенного текста */
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    flex-grow: 1;                 /* Занимает всё свободное место, чтобы кнопка была внизу */
+}
+/* Блок с зарплатой */
+.card .salary {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+/* Бейдж востребованности */
+.card .demand {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+}
+/* Цвета для разной востребованности */
+.demand-high { background: #fee2e2; color: #b91c1c; }   /* Красный для высокого спроса */
+.demand-medium { background: #fff3cd; color: #856404; } /* Жёлтый для среднего */
+.demand-low { background: #d1e7dd; color: #0f5132; }    /* Зелёный для низкого */
+
+/* -------------------- 11. КНОПКИ (ОБЩИЙ СТИЛЬ) -------------------- */
+.card button, .btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(67,97,238,0.3);
+    align-self: flex-start;
+    text-decoration: none;
+    display: inline-flex;         /* Для выравнивания иконки и текста */
+    align-items: center;
+    gap: 8px;
+}
+.card button:hover, .btn:hover {
+    transform: scale(1.02);       /* Лёгкое увеличение */
+    box-shadow: 0 6px 12px rgba(67,97,238,0.4);
+}
+.card button:active, .btn:active {
+    transform: scale(0.98);       /* Эффект нажатия */
+}
+
+/* -------------------- 12. БЛОК ФИЛЬТРАЦИИ -------------------- */
+.filter-section {
+    background: var(--white);
+    padding: 1rem 1.5rem;
+    border-radius: 60px;          /* Очень скруглённый, как большая пилюля */
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.filter-section label {
+    font-weight: 600;
+}
+.filter-section select, .filter-section input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    background: white;
+    transition: all 0.2s;
+}
+.filter-section select:focus, .filter-section input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67,97,238,0.1); /* Синее свечение */
+}
+
+/* -------------------- 13. КАЛЬКУЛЯТОР ЗАРПЛАТ -------------------- */
+.calculator-box {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    max-width: 550px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.form-group select, .form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 40px;
+    font-size: 1rem;
+}
+.result-box {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #eef2ff;
+    border-radius: var(--border-radius);
+    border-left: 5px solid var(--primary);
+}
+
+/* -------------------- 14. ПОДВАЛ -------------------- */
+footer {
+    background: var(--dark);
+    color: #aaa;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    font-size: 0.85rem;
+}
+footer i {
+    margin-right: 5px;
+    color: var(--primary);
+}
+
+/* -------------------- 15. АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК -------------------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -------------------- 16. АДАПТИВНОСТЬ (МОБИЛЬНЫЕ УСТРОЙСТВА) -------------------- */
+@media (max-width: 768px) {
+    header h1 { font-size: 1.4rem; }
+    nav a { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+    .page-title { font-size: 1.8rem; }
+    .filter-section { flex-direction: column; align-items: stretch; border-radius: 24px; }
+    .filter-section select, .filter-section input { width: 100%; }
+    .card-container { justify-content: center; }
+}
+
+/* -------------------- 17. СТИЛИ ДЛЯ КВИЗА (ИНТЕГРИРОВАНЫ В ОБЩИЙ ДИЗАЙН) -------------------- */
+.quiz-container {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin: 0 auto;
+}
+.progress {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+.option-btn {
+    background: #f2f2f2;
+    border: 2px solid transparent;
+    border-radius: 60px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.option-btn i { width: 24px; color: var(--primary); }
+.option-btn:hover { background: #e6e6e6; border-color: var(--primary); }
+.option-btn.selected { background: var(--primary); color: white; }
+.option-btn.selected i { color: white; }
+.navigation { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+.result-card { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; background: #f8f9fa; padding: 1.5rem; border-radius: 20px; }
+@media (max-width: 500px) {
+    .result-card { flex-direction: column; text-align: center; }
+}
+
+/* -------------------- 18. ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ КЛИКАБЕЛЬНЫХ КАРТОЧЕК -------------------- */
+.card-link {
+    text-decoration: none;        /* Убираем подчёркивание у ссылки-обёртки */
+    display: block;               /* Блочный элемент */
+}
+.card-link .card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card-link:hover .card {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* -------------------- 19. ТЁМНАЯ ТЕМА (АКТИВИРУЕТСЯ КЛАССОМ DARK-THEME НА BODY) -------------------- */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #e0e0e0;
+}
+body.dark-theme .card,
+body.dark-theme .filter-section,
+body.dark-theme .calculator-box,
+body.dark-theme .quiz-container,
+body.dark-theme [style*="background: white"] {
+    background: #2d2d44;
+    color: #e0e0e0;
+    border-color: #3a3a5a;
+}
+body.dark-theme .card p,
+body.dark-theme .filter-section label {
+    color: #b0b0d0;
+}
+body.dark-theme .result-box {
+    background: #1e1e2f;
+    border-left-color: var(--primary);
+}
+body.dark-theme .option-btn {
+    background: #3a3a5a;
+    color: #e0e0e0;
+}
+body.dark-theme .option-btn:hover {
+    background: #4a4a6a;
+}
+body.dark-theme footer {
+    background: #0f0f1a;
+}
